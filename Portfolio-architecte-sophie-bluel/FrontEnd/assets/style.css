@@ -3,17 +3,6 @@
    License: none (public domain)
 */
 
-body {
-	margin-right: 150px;
-	margin-left: 150px;
-	background-color: #FFFEF8;
-}
-
-main {
-	margin-right: 95px;
-	margin-left: 95px;
-}
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -63,7 +52,16 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	margin-right: 150px;
+	margin-left: 150px;
+	background-color: #FFFEF8;
 }
+
+main {
+	margin-right: 95px;
+	margin-left: 95px;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -79,14 +77,19 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
+	width: 213px;
+	height: 42px;
+	justify-content: space-evenly;
 }
 
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
-	letter-spacing: 0.1em;
-;
+	text-transform: uppercase;
+	letter-spacing: 5%;
+	height: 12px;
+	font-weight: 400;
 }
 
 h2{
@@ -99,11 +102,15 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
+	gap: 2.75em;
 }
 nav li {
 	padding: 0 10px;
-	font-size: 1.2em;
+	font-size: 16px;
+	height: 19px;
+}
+nav li img {
+	height: 19.35px;
 }
 
 li:hover {
@@ -114,9 +121,12 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	justify-content: space-between;
 }
 #introduction figure {
-	flex: 1
+	flex: 0 0 50%;
 }
 #introduction img {
 	display: block;
@@ -125,18 +135,20 @@ li:hover {
 }
 
 #introduction article {
-	flex: 1
+	flex: 0 0 42%;
 }
 #introduction h2 {
 	margin-bottom: 1em;
 }
 
 #introduction p {
-	margin-bottom: 0.5em;
+	margin-bottom: 1em;
+	font-weight: 400;
+	color: #3D3D3D;
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-bottom: 2em;
 }
 .gallery {
 	width: 100%;
@@ -152,7 +164,7 @@ li:hover {
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -202,11 +214,7 @@ footer nav ul {
 figcaption {
 	font-size: 13px;
 	color: #3D3D3D;
-}
-
-figure .img{
-	width: 305px;
-	height: 407px;
+	padding-top: 5px;
 }
 
 .filters {

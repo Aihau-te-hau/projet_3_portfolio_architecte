@@ -1,11 +1,20 @@
-export async function initWorks() {
+let allWorks = [];
+// fonction pour obtenir tous les travaux (utilisée dans les filtres)
+export async function getAllWorks() {
     const response = await fetch('http://localhost:5678/api/works');
     const works = await response.json();
-    console.log(works);
-    displayWorks(works);
+    return works;
 }
 
-function displayWorks(works) {
+// initialisation et affichage des travaux
+export async function initWorks() {
+    allWorks = await getAllWorks();
+    console.log(allWorks);
+    displayWorks(allWorks);
+}
+
+// fonction pour afficher les travaux dans la galerie
+export function displayWorks(works) {
     const gallery = document.querySelector('.gallery');
     gallery.innerHTML = ''; // Clear existing content
     
