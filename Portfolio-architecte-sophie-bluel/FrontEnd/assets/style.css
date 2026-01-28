@@ -48,16 +48,17 @@ table {
 }
 /** end reset css**/
 body {
+	display: flex;
+	flex-direction: column;
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
-	margin-right: 150px;
-	margin-left: 150px;
 	background-color: #FFFEF8;
 }
 
 main {
+	flex: 1;
 	margin-right: 95px;
 	margin-left: 95px;
 }
@@ -108,15 +109,25 @@ nav li {
 	padding: 0 10px;
 	font-size: 16px;
 	height: 19px;
+	margin-bottom: 1em;
+	text-align: center;
+}
+.header-nav-li-img {
+	width: 19.35px;
+	height: 19.35px;
+	padding: 0;
 }
 nav li img {
 	height: 19.35px;
 }
 
 li:hover {
-	color: #B1663C;
+	color: #3D3D3D;
 	cursor: pointer;
-	font-weight: 700;
+	font-weight: 600;
+}
+li:visited {
+	text-decoration: none;
 }
 #introduction {
 	display: flex;
@@ -149,6 +160,10 @@ li:hover {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 2em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1em;
 }
 .gallery {
 	width: 100%;
@@ -203,12 +218,13 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
 }
 
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin-top: 2em;
 }
 
 figcaption {
@@ -245,4 +261,86 @@ figcaption {
 .filters button[data-category="all"] {
 	background-color: #1D6154;
 	color: white;
+}
+
+.filters button:visited {
+	text-decoration: none;
+}
+
+#login {
+	width: 50%;
+	margin: auto;
+}
+#login > * {
+	text-align: center;
+}
+#login h2{
+	margin-bottom: 20px;
+}
+#login form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login label {
+	margin: 2em 0 1em 0;
+}
+
+.mentions-legales {
+	font-weight: 300;
+	font-size: 14px;
+	width: auto;
+	padding: 0;
+	margin-bottom: 1em;
+}
+.mentions-legales:hover {
+	text-decoration: none;
+	font-weight: 300;
+}
+.mdp-oublie {
+	font-weight: 500;
+	font-size: 14px;
+  	display: flex;
+  	justify-content: center;
+  	color: #3D3D3D;
+	text-decoration: underline;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+}
+a:visited {
+	text-decoration: none;
+	color: inherit;
+}
+html, body {
+	height: 100%;
+}
+.edit-banner {
+	background-color: #000000;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 16px;
+	gap: 10px;
+}
+.edit-button {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
 }

@@ -1,9 +1,22 @@
 let allWorks = [];
 // fonction pour obtenir tous les travaux (utilisée dans les filtres)
 export async function getAllWorks() {
-    const response = await fetch('http://localhost:5678/api/works');
-    const works = await response.json();
-    return works;
+    // IMPORTANT
+    // verification et gestion des erreurs
+    // suite ou l'arrêt du backend a posé problème qui a duré plusieurs jours
+    try {
+        const response = await fetch('http://localhost:5678/api/works');
+
+        if (!response.ok) {
+            throw new Error(`Erreur API works : ${response.status}`);
+        }
+
+        const works = await response.json();
+        return works;
+    } catch (error) {
+        console.error("Impossible de charger les works :", error);
+        return []; // fallback pour éviter que tout casse côté UI
+    }
 }
 
 // initialisation et affichage des travaux
