@@ -67,5 +67,45 @@
 			</ul>
 		</nav>
 	</footer>
+
+	<!-- MODALES -->
+	<aside id="edit-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title" style="display: none;">
+		<div class="modal-wrapper">
+			<button class="js-modal-close">×</button>
+			<h3 class="modal-title">Galerie photo</h3>
+			<div class="modal1-gallery"></div>
+				<!-- ici seront injectés les projets de la galerie -->
+			<hr>
+			<button class="open-modal2-button"><a href="#modal2" class="js-modal">Ajouter une photo</a></button>
+		</div>
+	</aside>
+
+	<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title" style="display: none;">
+		<div class="modal-wrapper">
+			<div>
+				<button class="back-modal-button"><a href="#modal1" class="js-modal">←</a></button>
+				<button class="js-modal-close">×</button>
+			</div>
+			<h3 class="modal-title">Ajout photo</h3>
+			<form action="" method="post" id="modal2-form">
+				<label for="image" class="modal2-chargement-image">
+					<img src="./assets/icons/picture.png" alt="">
+					<span class="button-ajout-image">+ Ajouter une photo</span>
+					<p>jpg, png : 4mo max</p>
+				</label>
+				<!-- l'input file est caché mais lié au label, car difficile à css, ci-dessus car quand on clique sur le label, ça ouvre la fenêtre de sélection de fichier -->
+				<input type="file" id="image" name="image" accept="image/png, image/jpeg" hidden required>
+
+				<label for="title">Titre</label>
+				<input type="text" name="title" id="title" required>
+				<label for="category">Catégorie</label>
+				<select name="category" id="category" required>
+					<!-- Les options de catégorie seront injectées ici par JavaScript -->
+				</select>
+				<hr>
+				<input type="submit" value="Valider">
+			</form>
+		</div>
+	</aside>
 </body>
 </html>

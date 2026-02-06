@@ -32,5 +32,4 @@ exports.delete = async (req, res) => {
 	}catch(e){
 		return res.status(500).json({error: new Error('Something went wrong')})
 	}
-
 }

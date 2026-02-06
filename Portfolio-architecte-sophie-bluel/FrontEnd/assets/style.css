@@ -344,3 +344,71 @@ html, body {
 	align-items: center;
 	gap: 8px;
 }
+
+/* Styles pour la modal
+modal-overlay est le fond semi-transparent
+modal est la boîte blanche centrée */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-wrapper {
+  background: #FFFFFF;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
+  overflow: auto; /* Ajout d'une barre de défilement si le contenu dépasse la hauteur de la fenêtre */
+  width: 50%;
+}
+
+.modal-buton {
+  	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px ;
+	cursor: pointer;
+	height: 36px;
+}
+
+.modal-title {
+	text-align: center;
+	margin-bottom: 20px;
+	font-size: 26px;
+	font-weight: 400;
+}
+
+hr {
+	border: 1px solid #B3B3B3;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.close-modal {
+	background: none;
+	border: none;
+	width: 24px;
+	height: 24px;
+	font-size: 24px;
+	cursor: pointer;
+	padding: 0;
+}
