@@ -69,41 +69,45 @@
 	</footer>
 
 	<!-- MODALES -->
-	<aside id="edit-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title" style="display: none;">
+	<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title" style="display: none;">
 		<div class="modal-wrapper">
-			<button class="js-modal-close">×</button>
+			<div class="modal-wrapper-entete1">
+				<button class="js-modal-close"><img src="./assets/icons/xmark.png" alt="fermer modal"></button>
+			</div>
 			<h3 class="modal-title">Galerie photo</h3>
 			<div class="modal1-gallery"></div>
 				<!-- ici seront injectés les projets de la galerie -->
 			<hr>
-			<button class="open-modal2-button"><a href="#modal2" class="js-modal">Ajouter une photo</a></button>
+			<button class="open-modal2-button js-modal" data-modal-target="#modal2">Ajouter une photo</button>
 		</div>
 	</aside>
 
-	<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title" style="display: none;">
+	<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title" style="display: none;" >
 		<div class="modal-wrapper">
-			<div>
-				<button class="back-modal-button"><a href="#modal1" class="js-modal">←</a></button>
-				<button class="js-modal-close">×</button>
+			<div class="modal-wrapper-entete2">
+				<button class="back-modal-button js-modal" data-modal-target="#modal1"><img src="./assets/icons/arrowLeft.png" alt="revenir en arrière"></button>
+				<button class="js-modal-close"><img src="./assets/icons/xmark.png" alt="fermer modal"></button>
 			</div>
 			<h3 class="modal-title">Ajout photo</h3>
 			<form action="" method="post" id="modal2-form">
-				<label for="image" class="modal2-chargement-image">
-					<img src="./assets/icons/picture.png" alt="">
-					<span class="button-ajout-image">+ Ajouter une photo</span>
+				<div class="modal2-chargement-image">
+					<img src="./assets/icons/iconImage.png" alt="icon chargement image">
+					<button class="button-ajout-image">+ Ajouter photo</button>
 					<p>jpg, png : 4mo max</p>
-				</label>
+				</div>
 				<!-- l'input file est caché mais lié au label, car difficile à css, ci-dessus car quand on clique sur le label, ça ouvre la fenêtre de sélection de fichier -->
 				<input type="file" id="image" name="image" accept="image/png, image/jpeg" hidden required>
 
-				<label for="title">Titre</label>
-				<input type="text" name="title" id="title" required>
-				<label for="category">Catégorie</label>
-				<select name="category" id="category" required>
-					<!-- Les options de catégorie seront injectées ici par JavaScript -->
-				</select>
+				<div class="modal2-form-champs">
+					<label for="title">Titre</label>
+					<input type="text" name="title" id="title" required>
+					<label for="category">Catégorie</label>
+					<select name="category" id="category" required>
+						<!-- Les options de catégorie seront injectées ici par JavaScript -->
+					</select>
+				</div>
 				<hr>
-				<input type="submit" value="Valider">
+				<input type="submit" value="Valider" class="modal2-form-submit">
 			</form>
 		</div>
 	</aside>

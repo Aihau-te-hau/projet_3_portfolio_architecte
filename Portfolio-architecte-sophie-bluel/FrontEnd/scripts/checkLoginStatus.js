@@ -117,7 +117,7 @@ export function checkLoginStatus() {
     if (projectsTitle && !projectsTitle.querySelector('.edit-button')) {
         const editButton = document.createElement('button');
         editButton.classList.add('edit-button', 'js-modal');
-        editButton.setAttribute('data-modal-target', '#edit-modal'); // on utilise un data-attribute pour cibler la modal à ouvrir
+        editButton.setAttribute('data-modal-target', '#modal1'); // on utilise un data-attribute pour cibler la modal à ouvrir
 
         editButton.addEventListener('click', (event) => {
             // ouvrir la modal d'édition

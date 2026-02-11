@@ -334,6 +334,8 @@ html, body {
 	justify-content: center;
 	font-size: 16px;
 	gap: 10px;
+	width: 100vw;
+  	margin-left: calc(50% - 50vw);
 }
 .edit-button {
 	background: none;
@@ -363,10 +365,7 @@ modal est la boîte blanche centrée */
 
 .modal-wrapper {
   background: #FFFFFF;
-  padding-top: 10px;
-  padding-bottom: 20px;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding: 20px 100px 20px 100px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -374,20 +373,23 @@ modal est la boîte blanche centrée */
   max-width: calc(100vw - 20px);
   max-height: calc(100vh - 20px);
   overflow: auto; /* Ajout d'une barre de défilement si le contenu dépasse la hauteur de la fenêtre */
-  width: 50%;
+  overflow-x: hidden; /* Empêche le défilement horizontal */
+  width: 35%;
+  height: auto;
 }
 
-.modal-buton {
+.open-modal2-button {
   	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
 	margin : 2em auto ;
-	width: 180px;
+	width: auto;
 	text-align: center;
 	border-radius: 60px ;
 	cursor: pointer;
-	height: 36px;
+	font-size: 16px;
+	padding: 10px 50px;
 }
 
 .modal-title {
@@ -395,6 +397,7 @@ modal est la boîte blanche centrée */
 	margin-bottom: 20px;
 	font-size: 26px;
 	font-weight: 400;
+	margin-top: 15px;
 }
 
 hr {
@@ -403,12 +406,108 @@ hr {
 	width: 100%;
 }
 
-.close-modal {
-	background: none;
+.js-modal-close, .back-modal-button, .modal-works-delete-button {
 	border: none;
-	width: 24px;
-	height: 24px;
-	font-size: 24px;
+	background-color: #FFFFFF;
 	cursor: pointer;
+}
+.modal-works-delete-button {
+	width: 17px;
+	height: 17px;
 	padding: 0;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 10;
+}
+
+.modal1-gallery {
+	display: grid;
+	row-gap: 20px;
+	column-gap: 10px;
+	justify-content: center;
+	grid-template-columns: repeat(5, 1fr);
+	max-width: fit-content;
+	margin-top: 30px;
+  margin-bottom: 50px;
+}
+.modal1-gallery img {
+  width: 100%;
+}
+.modal-works-figure {
+	position: relative;
+}
+.modal-wrapper-entete1 {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	width: calc(100% + 2 * 70px);
+}
+.modal-wrapper-entete2 {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: calc(100% + 2 * 70px);
+	margin-bottom: 20px;
+}
+
+input[type="submit"].modal2-form-submit {
+	background-color: #A7A7A7;
+	height: 36px;
+	border: none;
+	display: flex;
+	font-size: 14px;
+}
+
+.modal2-form{
+	width: 100%;
+}
+.modal2-chargement-image {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background: #E8F1F6;
+	border-radius: 3px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+.button-ajout-image {
+	font-family: 'Syne';
+	font-weight: 500;
+	color: #306685;
+	background-color: #CBD6DC;
+	border: none;
+	border-radius: 60px ;
+	padding: 10px 30px;
+	cursor: pointer;
+	font-size: 14px;
+	height: 36px;
+}
+.modal2-chargement-image p {
+	font-size: 12px;
+	color: #444444;
+	font-weight: 400;
+	font-family: 'Work Sans';
+}
+.modal2-form-champs {
+	gap: 20px;
+	margin-bottom: 50px;
+}
+#title, #category {
+	box-sizing: border-box;
+	height: 51px;
+	font-size: 14px;
+	padding: 10px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	background-color: #FFFFFF;
+}
+label[for="title"], label[for="category"] {
+	font-size: 14px;
+	font-family: 'Work Sans';
+	font-weight: 500;
+	color: #3D3D3D;
 }
