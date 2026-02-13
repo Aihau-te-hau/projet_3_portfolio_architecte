@@ -80,8 +80,10 @@ export async function deleteWork(workId) {
         if (!response.ok) {
             throw new Error(`Erreur API delete work : ${response.status}`);
         } else {
-            allWorks = allWorks.filter(work => work.id !== workId);
-            displayWorks(allWorks);
+            // allWorks = allWorks.filter(work => work.id !== workId);
+            // displayWorks(allWorks);
+            // appel de initWorks à la place du bloc de code ci-dessus pour éviter les problèmes de synchronisation avec le backend
+            await initWorks();
         }
     } catch (error) {
         console.error("Impossible de supprimer le travail :", error);

@@ -459,7 +459,7 @@ input[type="submit"].modal2-form-submit {
 	font-size: 14px;
 }
 
-.modal2-form{
+#modal2-form{
 	width: 100%;
 }
 .modal2-chargement-image {
@@ -495,6 +495,8 @@ input[type="submit"].modal2-form-submit {
 .modal2-form-champs {
 	gap: 20px;
 	margin-bottom: 50px;
+	display: flex;
+	flex-direction: column;
 }
 #title, #category {
 	box-sizing: border-box;
