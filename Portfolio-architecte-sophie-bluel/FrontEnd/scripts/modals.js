@@ -69,8 +69,6 @@ export const openModal = (event) => {
                 // Ajout d'un listener de suppression pour chaque bouton de suppression
                 iconDelete.addEventListener('click', async () => {
                     await deleteWork(work.id);
-
-                    refreshModalWorks();
                 });
 
                 figure.appendChild(img);

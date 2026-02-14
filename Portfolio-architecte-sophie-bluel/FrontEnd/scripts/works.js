@@ -29,7 +29,8 @@ export async function initWorks() {
 // fonction pour afficher les travaux dans la galerie
 export function displayWorks(works) {
     const gallery = document.querySelector('.gallery');
-    gallery.innerHTML = ''; // Clear existing content
+    // vide la galerie avant d'afficher les travaux filtrés ou tous les travaux pour éviter les doublons à chaque clic sur un bouton de filtre
+    gallery.innerHTML = '';
     
     works.forEach(work => {
         const figure = document.createElement('figure');
@@ -79,14 +80,45 @@ export async function deleteWork(workId) {
         });
         if (!response.ok) {
             throw new Error(`Erreur API delete work : ${response.status}`);
-        } else {
-            // allWorks = allWorks.filter(work => work.id !== workId);
-            // displayWorks(allWorks);
-            // appel de initWorks à la place du bloc de code ci-dessus pour éviter les problèmes de synchronisation avec le backend
-            await initWorks();
         }
+
+        // allWorks = allWorks.filter(work => work.id !== workId);
+        // displayWorks(allWorks);
+        // appel de initWorks à la place du bloc de code ci-dessus pour éviter les problèmes de synchronisation avec le backend
+        await initWorks();
+
+        refreshModalWorks();
     } catch (error) {
         console.error("Impossible de supprimer le travail :", error);
         // pas de throw → on laisse l'app continuer à vivre
     }
+}
+
+// fonction pour rafraîchir les travaux affichés dans la modal d'édition après une suppression ou un ajout
+export function refreshModalWorks() {
+    const gallery = document.querySelector('.modal1-gallery');
+
+    // réinitialiser la galerie de la modal d'édition
+    gallery.innerHTML = '';
+    // réafficher tous les travaux
+    allWorks.forEach(work => {
+        const figure = document.createElement('figure');
+        const img = document.createElement('img');
+        const iconDelete = document.createElement('button');
+        figure.classList.add('modal-works-figure');
+        img.src = work.imageUrl;
+        img.alt = work.title;
+        img.classList.add('modal-image');
+        iconDelete.innerHTML = '<img src="./assets/icons/Delete.png" alt="Supprimer" class="modal-works-delete-icon">';
+        iconDelete.classList.add('modal-works-delete-button');
+
+        // Ajout d'un listener de suppression pour chaque bouton de suppression
+        iconDelete.addEventListener('click', async () => {
+            await deleteWork(work.id);
+        });
+
+        figure.appendChild(img);
+        figure.appendChild(iconDelete);
+        gallery.appendChild(figure);
+    });
 }
