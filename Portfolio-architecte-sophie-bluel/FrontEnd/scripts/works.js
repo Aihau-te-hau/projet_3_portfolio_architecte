@@ -22,6 +22,7 @@ export async function getAllWorks() {
 // initialisation et affichage des travaux
 export async function initWorks() {
     allWorks = await getAllWorks();
+    // console.log pour vérifier la synchro, suivre l’état, comprendre les bugs UI, valider le flux delete/add/init
     console.log(allWorks);
     displayWorks(allWorks);
 }
@@ -60,9 +61,15 @@ export async function addWork(workData) {
         if (!response.ok) {
             throw new Error(`Erreur API add work : ${response.status}`);
         }
-        const newWork = await response.json();
-        allWorks.push(newWork);
-        displayWorks(allWorks);
+        // const newWork = await response.json();
+        // allWorks.push(newWork);
+        // displayWorks(allWorks);
+        // appel de initWorks à la place de displayWorks pour éviter les problèmes de synchronisation avec le backend
+        // puisque displayWorks utilise allWorks qui est mis à jour dans initWorks après l'ajout du projet dans le backend
+        // puis rafraîchit la galerie de la page d'accueil et de la modal d'édition grâce à l'appel de refreshModalWorks() après initWorks() pour éviter les problèmes de synchronisation avec le backend
+        await initWorks();
+        refreshModalWorks();
+
     }   catch (error) {
         console.error("Impossible d'ajouter le travail :", error);
         // pas de throw → on laisse l'app continuer à vivre

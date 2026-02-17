@@ -12,6 +12,7 @@ export const closeModal = (event) => {
     modal.setAttribute('aria-hidden', 'true');
     modal.removeEventListener('click', closeModal);
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
+    resetPreview();
     modal = null;
 }
 
@@ -97,5 +98,95 @@ export const initModals = () => {
     const modalTriggers = document.querySelectorAll('.js-modal');
     modalTriggers.forEach(trigger => {
         trigger.addEventListener('click', openModal);
+    });
+    initModal2Logic();
+}
+
+// reset preview de l'image dans la modal d'ajout de projet à chaque fermeture de la modal pour éviter que l'image précédente reste affichée si l'utilisateur ouvre à nouveau la modal sans sélectionner une nouvelle image
+function resetPreview() {
+    const imagePreview = document.getElementById('imagePreview');
+    const fileInput = document.getElementById('image');
+    const titleInput = document.getElementById('title');
+
+    if (imagePreview) imagePreview.src = "./assets/icons/iconImage.png";
+    if (fileInput) fileInput.value = "";
+    if (titleInput) titleInput.value = "";
+}
+
+// logique de la deuxième modale
+function initModal2Logic() {
+
+    const fileInput = document.getElementById('image');
+    const uploadedButton = document.querySelector('.button-ajout-image');
+    const imagePreview = document.getElementById('imagePreview');
+    const form = document.forms.namedItem('modal2-form');
+    const submitBtn = form.querySelector('.modal2-form-submit');
+
+    // sécurité : si la modal n'existe pas encore dans le DOM on stop
+    if (!fileInput || !form) return;
+
+    // on va lier le bouton d'ajout d'image au champ de fichier pour améliorer l'UX, car le champ de fichier est difficile à styliser et pas très engageant pour l'utilisateur, alors que le bouton peut être stylisé pour être plus attrayant et inciter l'utilisateur à cliquer dessus pour sélectionner une image
+    uploadedButton.addEventListener('click', () => fileInput.click());
+
+    // preview de l'image sélectionnée
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        // FileReader permet de lire le contenu d'un fichier
+        // et de le convertir en URL affichable dans une <img>
+        const reader = new FileReader();
+        reader.onload = e => imagePreview.src = e.target.result;
+
+        // readAsDataURL convertit le fichier en base64
+        // → utilisable directement comme src d'une <img> pour l'aperçu
+        reader.readAsDataURL(file);
+
+        // on vérifie aussi la validité du formulaire après ajout image
+        checkFormValidity();
+    });
+
+    // vérification du remplissage des champs afin de modifier le bouton submit
+    function checkFormValidity() {
+        const title = form.elements['title']?.value;
+        const categoryId = form.elements['category']?.value;
+        const imageFile = form.elements['image']?.files[0];
+
+        if (title?.trim() && categoryId?.trim() && imageFile) {
+            submitBtn.classList.add('active');
+            submitBtn.disabled = false;
+        } else {
+            submitBtn.classList.remove('active');
+            // si je veux carrément désactiver le bouton submit tant que le formulaire n'est pas valide, je peux ajouter la ligne ci-dessous, mais j'ai préféré ne pas le faire pour ne pas bloquer l'utilisateur dans sa navigation et éviter les bugs d'invalidité du formulaire qui bloqueraient le bouton submit même si les champs sont remplis
+            // submitBtn.disabled = true;
+        }
+    }
+
+    // écoute des champs pour mise à jour du bouton en temps réel
+    form.elements['title'].addEventListener('input', checkFormValidity);
+    form.elements['category'].addEventListener('change', checkFormValidity);
+
+    // écoute du submit pour ajouter le projet via l'API et fermer la modal après ajout
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const title = form.elements['title']?.value;
+        const categoryId = form.elements['category']?.value;
+        const imageFile = form.elements['image']?.files[0];
+
+        // ici trim pour vérifier que les champs ne sont pas vides ou composés uniquement d'espaces
+        // ici ?. vérifie que le champ existe puis fais un trim car il renvoie undifined si !champ, sinon bug silencieux car trim() ne peut pas être appliqué à undefined
+        if (!title?.trim() || !categoryId?.trim() || !imageFile) {
+            alert('Veuillez remplir tous les champs du formulaire.');
+            return;
+        }
+
+        const formData = new FormData(form);
+
+        await addWork(formData);
+
+        // on ferme la modal après ajout
+        // le refresh galerie est géré dans addWork() grâce à l'appel de initWorks() après l'ajout du projet dans le backend pour éviter les problèmes de synchronisation avec le backend
+        closeModal(new Event('click'));
     });
 }

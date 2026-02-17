@@ -458,6 +458,11 @@ input[type="submit"].modal2-form-submit {
 	display: flex;
 	font-size: 14px;
 }
+input[type="submit"].modal2-form-submit.active {
+	background-color: #1D6154;
+	color: white;
+	cursor: pointer;
+}
 
 #modal2-form{
 	width: 100%;
@@ -513,3 +518,11 @@ label[for="title"], label[for="category"] {
 	font-weight: 500;
 	color: #3D3D3D;
 }
+/* #imagePreview {
+    width: 100%;
+    height: 100%;
+    max-height: 120px;
+    
+    object-fit: contain;
+    margin-bottom: 10px;
+} */

@@ -89,14 +89,14 @@
 				<button class="js-modal-close"><img src="./assets/icons/xmark.png" alt="fermer modal"></button>
 			</div>
 			<h3 class="modal-title">Ajout photo</h3>
-			<form action="" method="post" id="modal2-form">
+			<form enctype="multipart/form-data" action="" method="post" id="modal2-form" name="modal2-form">
 				<div class="modal2-chargement-image">
-					<img src="./assets/icons/iconImage.png" alt="icon chargement image">
+					<img src="./assets/icons/iconImage.png" alt="icon chargement image" id="imagePreview">
 					<button class="button-ajout-image">+ Ajouter photo</button>
 					<p>jpg, png : 4mo max</p>
 				</div>
 				<!-- l'input file est caché mais lié au label, car difficile à css, ci-dessus car quand on clique sur le label, ça ouvre la fenêtre de sélection de fichier -->
-				<input type="file" id="image" name="image" accept="image/png, image/jpeg" hidden required>
+				<input type="file" id="image" name="image" accept="image/png, image/jpeg" hidden>
 
 				<div class="modal2-form-champs">
 					<label for="title">Titre</label>
