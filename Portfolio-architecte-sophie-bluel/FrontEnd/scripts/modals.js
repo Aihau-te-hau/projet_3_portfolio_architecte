@@ -107,15 +107,18 @@ function resetPreview() {
     const imagePreview = document.getElementById('imagePreview');
     const fileInput = document.getElementById('image');
     const titleInput = document.getElementById('title');
+    const uploadContainer = document.querySelector('.modal2-chargement-image');
 
     if (imagePreview) imagePreview.src = "./assets/icons/iconImage.png";
     if (fileInput) fileInput.value = "";
     if (titleInput) titleInput.value = "";
+    if (uploadContainer) uploadContainer.classList.remove('has-image');
 }
 
 // logique de la deuxième modale
 function initModal2Logic() {
-
+    const uploadContainer = document.querySelector('.modal2-chargement-image');
+    const helpText = document.querySelector('.image-help-text');
     const fileInput = document.getElementById('image');
     const uploadedButton = document.querySelector('.button-ajout-image');
     const imagePreview = document.getElementById('imagePreview');
@@ -136,7 +139,12 @@ function initModal2Logic() {
         // FileReader permet de lire le contenu d'un fichier
         // et de le convertir en URL affichable dans une <img>
         const reader = new FileReader();
-        reader.onload = e => imagePreview.src = e.target.result;
+        reader.onload = e => {
+            imagePreview.src = e.target.result;
+
+            // Ajout du nouvel état visuel, celui de l'image chargée, en ajoutant une classe à l'upload container qui change son apparence grâce au CSS, pour indiquer à l'utilisateur que son image a bien été prise en compte et qu'elle est prête à être soumise
+            uploadContainer.classList.add('has-image');
+        };
 
         // readAsDataURL convertit le fichier en base64
         // → utilisable directement comme src d'une <img> pour l'aperçu
