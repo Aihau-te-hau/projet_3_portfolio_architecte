@@ -1,7 +1,12 @@
 import { parseJwt } from "./jwt.js";
 import { openModal } from "./modals.js";
 
-// 
+/**
+ * - token n'existe pas
+ * - token expiré
+ *      --> invalide
+ *      --> reset lien login
+ */
 
 export function checkLoginStatus() {
     // récupération du token dans le localStorage
@@ -14,8 +19,14 @@ export function checkLoginStatus() {
     // sécurité : si les éléments n'existent pas
     if (!filtersContainer || !logLink) return;
 
-    // cas token absent
-    if (!token) {
+    /**
+     * On vérifie 2 choses dans cette fonction :
+     * - Le token existe
+     * - Il est valide (pas expiré)
+     */
+    const tokenIsValid = verifyTokenIsValid(token);
+
+    if (!tokenIsValid) {
         // remettre l'interface par défaut
         filtersContainer.style.display = '';
         // Remplacer le lien de logout par login
@@ -28,43 +39,9 @@ export function checkLoginStatus() {
         return; // sortir de la fonction
     }
 
-    // parse du token pour vérifier sa validité
-    // IMPORTANT: UN TOKEN PEUT ÊTRE PRÉSENT MAIS EXPIRÉ
-    // cela peut créer des bugs si on ne le gère pas
-    // car on pourrait croire que l'utilisateur est connecté alors que son token n'est plus valide et le backend le refusera
-    let parsedToken;
-    // gestion de token corrompu
-    try {
-        parsedToken = parseJwt(token);
-    } catch (e) {
-        console.warn("Token invalide, suppression");
-        localStorage.removeItem("token");
-        filtersContainer.style.display = '';
-        return;
-    }
-    // convertir en millisecondes
-    const parsedTokenExpiration = parsedToken.exp * 1000;
-    const currentTime = Date.now(); // temps actuel en millisecondes
-    const tokenIsExpired = currentTime >= parsedTokenExpiration;
-
-    // cas token expiré
-    if (tokenIsExpired) {
-        // remettre l'interface par défaut
-        filtersContainer.style.display = '';
-
-        // IMPORTANT: SUPPRIMER LES ANCIENS LISTENERS
-        // pour éviter d'avoir plusieurs listeners attachés au même élément à chaque appel de checkLoginStatus ou rechargement de la page
-        // solution: 
-        // cloner l'élément pour enlever les anciens listeners
-        const newLogLink = logLink.cloneNode(true);
-        // remplacer l'ancien par le clone  propre (qui n'a pas de listener)
-        logLink.replaceWith(newLogLink);
-        // Remplacer le lien de logout par login
-        newLogLink.innerText = 'login';
-        newLogLink.href = 'views/login.html';
-
-        return; // sortir de la fonction
-    }
+    /**
+     * A partir d'ici, on considère que le token est valide (il a passé les validations ligne 30)
+     */
 
     // Si token existe, l'utilisateur est connecté
     // Modifier l'interface en conséquence
@@ -117,7 +94,10 @@ export function checkLoginStatus() {
     if (projectsTitle && !projectsTitle.querySelector('.edit-button')) {
         const editButton = document.createElement('button');
         editButton.classList.add('edit-button', 'js-modal');
-        editButton.setAttribute('data-modal-target', '#modal1'); // on utilise un data-attribute pour cibler la modal à ouvrir
+
+        // --- IMPORTANT ---
+        // on utilise un data-attribute pour cibler la modal à ouvrir
+        editButton.setAttribute('data-modal-target', '#modal1'); 
 
         editButton.addEventListener('click', (event) => {
             // ouvrir la modal d'édition
@@ -134,5 +114,67 @@ export function checkLoginStatus() {
         editButton.appendChild(editButtonText);
 
         projectsTitle.appendChild(editButton);
+    }
+}
+
+
+/**
+ * @returns {boolean} Le token est valide
+ */
+function verifyTokenIsValid(token) {
+    /**
+     * Si pas de token, c'est forcément invalide
+     */
+    if (!token) {
+        return false;
+    }
+
+    /**
+     * Arrivé ici, j'ai un token. On vérifie l'expiration (la fonction retourne un objet `{ expired: true/false }`)
+     */
+    const expirationResult = verifyTokenExpiration(token);
+
+    /**
+     * On accède à la propriété "expired" (true/false) pour savoir si le token est expiré ou non
+     */
+    const tokenIsExpired = expirationResult.expired;
+
+    /**
+     * Si le token est expiré, le token est invalide
+     */
+    if (tokenIsExpired) {
+        return false
+    }
+
+    /**
+     * Si on arrivé ici, c'est qu'on a passé toutes les validations, et on considère que le token est valide
+     */
+    return true
+}
+
+/**
+ * @param {string} token
+ */
+function verifyTokenExpiration(token) {
+    // parse du token pour vérifier sa validité
+    // IMPORTANT: UN TOKEN PEUT ÊTRE PRÉSENT MAIS EXPIRÉ
+    // cela peut créer des bugs si on ne le gère pas
+    // car on pourrait croire que l'utilisateur est connecté alors que son token n'est plus valide et le backend le refusera
+    let parsedToken;
+    // gestion de token corrompu
+    try {
+        parsedToken = parseJwt(token);
+    } catch (e) {
+        console.warn("Token invalide, suppression");
+        localStorage.removeItem("token");
+        return;
+    }
+    // convertir en millisecondes
+    const parsedTokenExpiration = parsedToken.exp * 1000;
+    const currentTime = Date.now(); // temps actuel en millisecondes
+    const tokenIsExpired = currentTime >= parsedTokenExpiration;
+
+    return {
+        expired: tokenIsExpired
     }
 }

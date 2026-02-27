@@ -47,8 +47,11 @@ function displayFilters(categories) {
         button.classList.add('filter-button');
         button.textContent = category.name;
 
+        // ajout du listener à la création du btn pour eviter le pb de listener qui existe avant que les boutons soient créés
         button.addEventListener('click', async () => {
-            const works = await getAllWorks(); // récupère tous les travaux
+            // récupère tous les travaux
+            const works = await getAllWorks(); 
+            // filtre les travaux en fonction de l'id de la catégorie stockée dans le data-attribute du bouton cliqué
             const filteredWorks = works.filter(work => work.category.id === Number(category.id));
             displayWorks(filteredWorks);
         });
